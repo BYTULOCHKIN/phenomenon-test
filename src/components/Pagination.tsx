@@ -19,7 +19,7 @@ const Pagination = () => {
   useEffect(() => {
     setPagination({
       ...pagination,
-      skip: (+pageValue - 1) * pagination.limit
+      skip: pageValue !== 0 ? (+pageValue - 1) * pagination.limit : 0
     })
   }, [pageValue])
   return (
@@ -49,7 +49,7 @@ const Pagination = () => {
         <div className={'flex items-center gap-1'}>
           <Button
             role="button"
-            isDisabled={pageValue === 1}
+            isDisabled={pageValue < 1}
             onClick={() => {
               setPageValue(1)
             }}
@@ -58,7 +58,7 @@ const Pagination = () => {
           />
           <Button
             role="button"
-            isDisabled={pageValue === 1}
+            isDisabled={pageValue < 1}
             iconBefore={<ChevronLeftIcon />}
             onClick={() => {
               setPageValue((prev) => prev - 1)
