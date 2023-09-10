@@ -5,14 +5,15 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "npm run build:css && tsc && vite build",
+    "build": "tsc && vite build",
     "predeploy" : "npm run build",
-    "deploy" : "gh-pages -d build",
+    "deploy" : "gh-pages -d dist",
     "build:css": "tailwindcss build src/tailwind.css -o src/index.css --watch",
     "watch:css": "postcss src/tailwind.css -o src/index.css --watch",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview"
   },
+  "homepage": "https://BYTULOCHKIN.github.io/phenomenon-test",
   "dependencies": {
     "@atlaskit/button": "^16.10.0",
     "@atlaskit/menu": "^1.10.1",

@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useState } from 'react'
+import React, { FC, useEffect } from 'react'
 import { Table } from '@radix-ui/themes'
 import { UsersTableProps } from '../types/components-props'
 
@@ -10,7 +10,6 @@ import useUsersTableStore from '../store/useUsersTableStore.ts'
 import Status from './Status.tsx'
 
 export const MainTable: FC<UsersTableProps> = ({ users, columns }) => {
-  const [isPopupOpen, setIsPopupOpen] = useState<boolean>(false)
   const { isLoading } = useUsersTableStore()
 
   useEffect(() => {
@@ -46,7 +45,7 @@ export const MainTable: FC<UsersTableProps> = ({ users, columns }) => {
                 </Table.ColumnHeaderCell>
               ))}
             <Table.ColumnHeaderCell className="last:border-r-0 ">
-              <PopoverDemo isOpen={isPopupOpen} setIsOpen={setIsPopupOpen} />
+              <PopoverDemo />
             </Table.ColumnHeaderCell>
           </Table.Row>
         </Table.Header>
