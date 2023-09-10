@@ -16,6 +16,7 @@
   "homepage": "https://bytulochkin.github.io/phenomenon-test/",
   "dependencies": {
     "@atlaskit/button": "^16.10.0",
+    "@atlaskit/textfield": "^5.6.6",
     "@radix-ui/react-avatar": "^1.0.3",
     "@radix-ui/react-icons": "^1.3.0",
     "@radix-ui/react-popover": "1.0.6",
