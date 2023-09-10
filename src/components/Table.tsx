@@ -125,14 +125,6 @@ export const MainTable: FC<UsersTableProps> = ({ users, columns }) => {
           )}
         </Table.Body>
       </Table.Root>
-      {/*<div className="p-5 flex items-center justify-between">*/}
-      {/*  <div className="flex justify-center items-center text-center">*/}
-      {/*    <SelectValuePerPage />*/}
-      {/*    <div className="whitespace-nowrap flex justify-center items-center text-center text-xs font-plex-sans text-gray-600 font-semibold	ml-1 ">*/}
-      {/*      ITEMS PER PAGE*/}
-      {/*    </div>*/}
-      {/*  </div>*/}
-      {/*</div>*/}
     </>
   )
 }
