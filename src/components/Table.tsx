@@ -98,7 +98,8 @@ export const MainTable: FC<UsersTableProps> = ({ users, columns }) => {
               {columns.find((c) => c.displayName === 'Domain')?.isActive ? (
                 <Table.Cell>
                   <a
-                    href="#"
+                    href={`https://www.${user.domain}`}
+                    target={'_blank'}
                     className="text-blue-700 hover:text-blue-700 underline transition duration-300"
                   >
                     {user.domain}
