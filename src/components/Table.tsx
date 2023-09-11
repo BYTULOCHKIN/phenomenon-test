@@ -46,7 +46,7 @@ export const MainTable: FC<UsersTableProps> = ({ users, columns }) => {
                   {column.displayName}
                 </Table.ColumnHeaderCell>
               ))}
-            <Table.ColumnHeaderCell className="sticky top-0 z-10 last:border-r-0 ">
+            <Table.ColumnHeaderCell className="sticky right-0 top-0 z-20 last:border-r-0 ">
               <PopoverDemo />
             </Table.ColumnHeaderCell>
           </Table.Row>
@@ -58,7 +58,7 @@ export const MainTable: FC<UsersTableProps> = ({ users, columns }) => {
               key={user.email}
             >
               {
-                <Table.RowHeaderCell className={'sticky  left-0 z-1 !bg-white'}>
+                <Table.RowHeaderCell className={'sticky left-0 z-1 !bg-white'}>
                   <div className="flex items-center">
                     <UserAvatar src={user.image} />
                     <div className={'ml-2  text-xs font-plex-sans text-gray-900 font-medium'}>
