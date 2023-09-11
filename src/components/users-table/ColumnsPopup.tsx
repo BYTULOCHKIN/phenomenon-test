@@ -1,20 +1,26 @@
 import React, { useState } from 'react'
 import * as Popover from '@radix-ui/react-popover'
-import { CheckIcon, GearIcon } from '@radix-ui/react-icons'
+import { CheckIcon } from '@radix-ui/react-icons'
 import useUsersTableStore from '../../store/useUsersTableStore.ts'
 import SearchBar from '../SearchBar.tsx'
 import { unavailable_to_disable } from '../../static/table-static.ts'
 import { Button } from '@radix-ui/themes'
+import SettingsIcons from '../../icons/SettingsIcon.tsx'
 
 const PopoverDemo = () => {
   const { columns, setColumns } = useUsersTableStore()
   const [searchValue, setSearchValue] = useState<string>('')
+  const [isSelected, setIsSelected] = useState(false)
   return (
-    <Popover.Root>
-      <Popover.Trigger asChild>
-        <Button variant="ghost">
-          <GearIcon width={20} height={20} className="text-gray-500" />
-        </Button>
+    <Popover.Root onOpenChange={() => setIsSelected(!isSelected)}>
+      <Popover.Trigger data-state={isSelected ? 'open' : 'closed'} asChild>
+        <button //TODO move button code to Button component
+          className={`p-1 rounded-full ${
+            isSelected ? 'bg-_dark-gray' : 'bg-transparent'
+          } bg-_dark-gray  hover:text-white inline-flex items-center`}
+        >
+          <SettingsIcons />
+        </button>
       </Popover.Trigger>
       <Popover.Portal className={'relative'}>
         <Popover.Content
@@ -23,7 +29,7 @@ const PopoverDemo = () => {
           sideOffset={5}
         >
           <SearchBar value={searchValue} setValue={setSearchValue} />
-          <div className="w-full flex flex-col gap-2.5">
+          <div className="font-plex-sans mt-2 w-full flex flex-col gap-2.5 h-[250px] overflow-x-scroll">
             {columns
               .filter((c) => c.displayName.toLowerCase().includes(searchValue.trim().toLowerCase()))
               .map((column) => (
@@ -45,13 +51,16 @@ const PopoverDemo = () => {
                   <div className={'flex justify-between w-full'}>
                     <span>{column.displayName}</span>
                     {column.isActive ? (
-                      <CheckIcon className={'text-blue-600'} width={24} height={24} />
+                      <CheckIcon className={'text-blue-600 mr-3.5'} width={24} height={24} />
                     ) : (
                       ''
                     )}
                   </div>
                 </Button>
               ))}
+            {!columns.filter((c) =>
+              c.displayName.toLowerCase().includes(searchValue.trim().toLowerCase())
+            ).length && <div className="text-gray-600">Not found...</div>}
           </div>
         </Popover.Content>
       </Popover.Portal>

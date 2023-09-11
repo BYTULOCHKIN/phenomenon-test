@@ -8,6 +8,7 @@ import PopoverDemo from './users-table/ColumnsPopup.tsx'
 import UserAvatar from './users-table/UserAvatar.tsx'
 import useUsersTableStore from '../store/useUsersTableStore.ts'
 import Status from './Status.tsx'
+import Gender from './users-table/Gender.tsx'
 
 export const MainTable: FC<UsersTableProps> = ({ users, columns }) => {
   const { isLoading } = useUsersTableStore()
@@ -19,6 +20,7 @@ export const MainTable: FC<UsersTableProps> = ({ users, columns }) => {
     while (parent) {
       if (parent.nodeName === 'TABLE') {
         parent.style.overflow = 'visible'
+        parent.style.borderCollapse = 'separate'
       }
       parent = parent.parentNode as HTMLElement
     }
@@ -26,9 +28,9 @@ export const MainTable: FC<UsersTableProps> = ({ users, columns }) => {
 
   return (
     <>
-      <Table.Root variant="surface" className={' h-[500px] w-full overflow-x-auto'}>
+      <Table.Root variant="surface" className={'h-[500px]  w-full overflow-x-auto'}>
         <Table.Header className="h-9">
-          <Table.Row className="child:border-r child:!bg-gray-100 last:border-0 !border-gray-300 whitespace-nowrap child:text-slate-600 child:font-plex-sans">
+          <Table.Row className="child:border-r child:!p-2  child:!bg-_gray last:border-0 !border-gray-300 whitespace-nowrap child:text-slate-600 child:font-plex-sans">
             {columns
               .filter((c) => c.isActive)
               .map((column, index) => (
@@ -37,29 +39,31 @@ export const MainTable: FC<UsersTableProps> = ({ users, columns }) => {
                   id={index === 0 ? 'users-table' : undefined}
                   className={
                     index === 0
-                      ? 'sticky left-0 top-0 z-20 '
+                      ? 'sticky left-0 top-0 z-20'
                       : '' + 'sticky top-0 z-10  last:border-r-0 '
                   }
                 >
                   {column.displayName}
                 </Table.ColumnHeaderCell>
               ))}
-            <Table.ColumnHeaderCell className="last:border-r-0 ">
+            <Table.ColumnHeaderCell className="sticky top-0 z-10 last:border-r-0 ">
               <PopoverDemo />
             </Table.ColumnHeaderCell>
           </Table.Row>
         </Table.Header>
-        <Table.Body className={'rounded'}>
+        <Table.Body className={'overflow-visible rounded'}>
           {users.map((user) => (
             <Table.Row
-              className={'child:border-r border-gray-300 whitespace-nowrap'}
+              className={'relative child:border-r border-gray-300 whitespace-nowrap'}
               key={user.email}
             >
               {
-                <Table.RowHeaderCell className={'sticky flex items-center left-0 z-1 !bg-white'}>
-                  <UserAvatar src={user.image} />
-                  <div className={'ml-2  text-xs font-plex-sans text-gray-900 font-medium'}>
-                    {user.firstName} {user.lastName}
+                <Table.RowHeaderCell className={'sticky  left-0 z-1 !bg-white'}>
+                  <div className="flex items-center">
+                    <UserAvatar src={user.image} />
+                    <div className={'ml-2  text-xs font-plex-sans text-gray-900 font-medium'}>
+                      {user.firstName} {user.lastName}
+                    </div>
                   </div>
                 </Table.RowHeaderCell>
               }
@@ -69,7 +73,12 @@ export const MainTable: FC<UsersTableProps> = ({ users, columns }) => {
                 </Table.Cell>
               ) : null}
               {columns.find((c) => c.displayName === 'Gender')?.isActive ? (
-                <Table.Cell aria-multiline={false}>{capitalizeFirstLetter(user.gender)}</Table.Cell>
+                <Table.Cell aria-multiline={true}>
+                  <div className=" w-[70px] flex items-center center">
+                    <Gender gender={user.gender} />
+                    <span className={'text-start'}>{capitalizeFirstLetter(user.gender)}</span>
+                  </div>
+                </Table.Cell>
               ) : null}
               <Table.Cell>{user.email}</Table.Cell>
               {columns.find((c) => c.displayName === 'Phone')?.isActive ? (
@@ -87,7 +96,14 @@ export const MainTable: FC<UsersTableProps> = ({ users, columns }) => {
                 </Table.Cell>
               ) : null}
               {columns.find((c) => c.displayName === 'Domain')?.isActive ? (
-                <Table.Cell>{user.domain}</Table.Cell>
+                <Table.Cell>
+                  <a
+                    href="#"
+                    className="text-blue-700 hover:text-blue-700 underline transition duration-300"
+                  >
+                    {user.domain}
+                  </a>
+                </Table.Cell>
               ) : null}
               {columns.find((c) => c.displayName === 'IP')?.isActive ? (
                 <Table.Cell>{user.ip}</Table.Cell>

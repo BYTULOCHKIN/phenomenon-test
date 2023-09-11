@@ -22,7 +22,6 @@ function App() {
   const [isError, setIsError] = useState(false)
 
   useEffect(() => {
-    localStorage.setItem('tableFilters', JSON.stringify(pagination))
     setIsError(false)
     setIsLoading(true)
 
@@ -35,11 +34,15 @@ function App() {
       })
   }, [pagination.limit, pagination.skip, searchValue])
 
+  useEffect(() => {
+    localStorage.setItem('tableFilters', JSON.stringify({ ...pagination, columns }))
+  }, [pagination.limit, pagination.skip, columns])
+
   return (
     <div className="font-plex-sans p-10">
       <Theme>
         <SearchBar value={searchValue} setValue={setSearchValue} />
-        <div className={'mt-5 bg-gray-100 rounded-lg rounded-br-lg'}>
+        <div className={'font-plex-sans mt-5 bg-gray-100 rounded-lg rounded-br-lg'}>
           <div className={'h-[500px] flex justify-center items-center'}>
             {isError && <Status status={'error'} />}
             {isLoading && <Status status={'loading'} />}

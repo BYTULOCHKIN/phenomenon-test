@@ -1,4 +1,4 @@
-import { Pagination } from '../types/store'
+import { ColumnsStore, Pagination } from '../types/store'
 
 export const formatDate = (input: string) => {
   const [year, month, day] = input.split('-')
@@ -26,4 +26,13 @@ export const getLocalStorageFilters = (): Pagination => {
     skip: 0,
     total: 0
   }
+}
+
+export const getLocalStorageColumns = (): ColumnsStore[] | undefined => {
+  const savedFilters = localStorage.getItem('tableFilters')
+  if (savedFilters) {
+    const { columns } = JSON.parse(savedFilters)
+    return columns
+  }
+  return
 }

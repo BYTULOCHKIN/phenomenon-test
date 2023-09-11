@@ -17,8 +17,13 @@ interface SvgIconProps {
   width?: string
   height?: string
   fill?: string
+  className?: string
 }
 
 export interface StatusProps {
   status?: 'error' | 'loading' | 'not_found'
+}
+
+export interface GenderProps {
+  gender: string
 }

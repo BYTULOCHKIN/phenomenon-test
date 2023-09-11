@@ -3,7 +3,7 @@ import { IUsersTableStore } from '../types/store'
 import { getUsers } from '../service/api/dummy.ts'
 import { COLUMNS } from '../static/table-static.ts'
 import debounce from 'debounce-promise'
-import { getLocalStorageFilters } from '../utils/common.ts'
+import { getLocalStorageColumns, getLocalStorageFilters } from '../utils/common.ts'
 
 const debounceGetUsers = debounce(
   (searchValue: string, limit: number, skip: number) => getUsers(searchValue, limit, skip),
@@ -24,11 +24,13 @@ const useTagsStore = create<IUsersTableStore>((set, get) => ({
     set({ users, pagination: { ...get().pagination, skip, total } })
   },
   setUsers: (users) => set({ users }),
-  columns: COLUMNS.map((c) => ({
-    displayName: c,
-    isActive: true,
-    changeability: true
-  })),
+  columns:
+    getLocalStorageColumns() ||
+    COLUMNS.map((c) => ({
+      displayName: c,
+      isActive: true,
+      changeability: true
+    })),
   pagination: {
     limit: getLocalStorageFilters().limit,
     skip: getLocalStorageFilters().skip,

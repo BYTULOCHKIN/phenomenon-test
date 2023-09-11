@@ -2,13 +2,11 @@ import React, { useEffect, useState } from 'react'
 import Button from '@atlaskit/button'
 import Textfield from '@atlaskit/textfield'
 import useUsersTableStore from '../store/useUsersTableStore.ts'
-import {
-  ChevronLeftIcon,
-  ChevronRightIcon,
-  DoubleArrowLeftIcon,
-  DoubleArrowRightIcon
-} from '@radix-ui/react-icons'
 import SelectValuePerPage from './SelectValuePerPage.tsx'
+import BackIcon from '../icons/BackIcon.tsx'
+import NextIcon from '../icons/NextIcon.tsx'
+import FullNextIcon from '../icons/FullNextIcon.tsx'
+import FullBackIcon from '../icons/FullBackIcon.tsx'
 
 const Pagination = () => {
   const { pagination, setPagination } = useUsersTableStore()
@@ -49,17 +47,24 @@ const Pagination = () => {
         <div className={'flex items-center gap-1'}>
           <Button
             role="button"
-            isDisabled={pageValue < 1}
+            appearance="subtle"
+            isDisabled={pageValue < 1 || pageValue === 1}
             onClick={() => {
               setPageValue(1)
             }}
-            iconBefore={<DoubleArrowLeftIcon />}
+            iconBefore={
+              <FullBackIcon fill={pageValue < 1 || pageValue === 1 ? '#C8CFD5' : '#687684'} />
+            }
             spacing={'compact'}
           />
+
           <Button
             role="button"
-            isDisabled={pageValue < 1}
-            iconBefore={<ChevronLeftIcon />}
+            appearance="subtle"
+            isDisabled={pageValue < 1 || pageValue === 1}
+            iconBefore={
+              <BackIcon fill={pageValue < 1 || pageValue === 1 ? '#C8CFD5' : '#687684'} />
+            }
             onClick={() => {
               setPageValue((prev) => prev - 1)
             }}
@@ -89,21 +94,31 @@ const Pagination = () => {
           />
           <Button
             role="button"
+            appearance="subtle"
             aria-pressed="false"
-            iconBefore={<ChevronRightIcon />}
+            iconBefore={
+              <NextIcon
+                fill={
+                  pageValue === Math.ceil(pagination.total / pagination.limit) ||
+                  pageValue > Math.ceil(pagination.total / pagination.limit)
+                    ? '#C8CFD5'
+                    : '#687684'
+                }
+              />
+            }
             isDisabled={
               pageValue === Math.ceil(pagination.total / pagination.limit) ||
               pageValue > Math.ceil(pagination.total / pagination.limit)
             }
             onClick={() => {
               setPageValue((prev) => prev + 1)
-              // setPagination({ ...pagination, skip: pagination.skip + pagination.limit })
             }}
             spacing={'compact'}
           />
 
           <Button
             role="button"
+            appearance="subtle"
             onClick={() => {
               setPageValue(Math.ceil(pagination.total / pagination.limit))
             }}
@@ -111,7 +126,16 @@ const Pagination = () => {
               pageValue === Math.ceil(pagination.total / pagination.limit) ||
               pageValue > Math.ceil(pagination.total / pagination.limit)
             }
-            iconBefore={<DoubleArrowRightIcon />}
+            iconBefore={
+              <FullNextIcon
+                fill={
+                  pageValue === Math.ceil(pagination.total / pagination.limit) ||
+                  pageValue > Math.ceil(pagination.total / pagination.limit)
+                    ? '#C8CFD5'
+                    : '#687684'
+                }
+              />
+            }
             className={'p-1'}
             spacing={'compact'}
           />
